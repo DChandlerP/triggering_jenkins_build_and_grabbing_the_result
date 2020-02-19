@@ -40,11 +40,10 @@ async function _triggerBuildReturnLocation (data) {
   const formData = new FormData()
   // My Jenkins build requires a file.
   formData.append('file_path/file_name', JSON.stringify(data), 'file_path/file_name')
-  // Optional string and Choise params look like below
-  // formData.append('ANSIBLE_EXTRA_ARG', '-v')
-  // formData.append('ANSIBLE_BRANCH', 'master')
-  const location = await _postFormGrabLocation(url, formData)
-  return location
+  // Optional string and Choice params look like below
+  // formData.append('ARGUMENTS', '-v')
+  // formData.append('BRANCH', 'master')
+  return await _postFormGrabLocation(url, formData)
 }
 
 async function _postFormGrabLocation (url, formData) {

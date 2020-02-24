@@ -7,7 +7,7 @@ const data = {};
 const baseUrl = 'https://example.com/';
 
 function triggerBuild(data) {
-  const path = 'job/dev_storage_allocation/buildWithParameters';
+  const path = 'job/job_name/buildWithParameters';
   const token = '?token=';
   const url = encodeURI(baseUrl + path + token);
   const formData = new FormData(); //needed for passing arguments

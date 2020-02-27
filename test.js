@@ -6,29 +6,29 @@ test('JenkinsBaseURL is correct', () => {
 })
 
 test('function get exists', () => {
-  expect(typeof main._get).toEqual('function')
+  expect(typeof main.get).toEqual('function')
 })
 
 test('function createStorageAllocation exists', () => {
   expect(typeof main.run).toEqual('function')
 })
 test('function sleep exists', () => {
-  expect(typeof main._sleep).toEqual('function')
+  expect(typeof main.sleep).toEqual('function')
 })
 
 test('function getBuildStatus exists', () => {
-  expect(typeof main._getBuildStatus).toEqual('function')
+  expect(typeof main.getBuildStatus).toEqual('function')
 })
 
-test('function _getBuildNumberFromQueue exists', () => {
-  expect(typeof main._getBuildNumberFromQueue).toEqual('function')
+test('function getBuildNumberFromQueue exists', () => {
+  expect(typeof main.getBuildNumberFromQueue).toEqual('function')
 })
 
-test('function _postFormGrabLocation', () => {
-  expect(typeof main._postFormGrabLocation).toEqual('function')
+test('function postFormGrabLocation', () => {
+  expect(typeof main.postFormGrabLocation).toEqual('function')
 })
-test('function _triggerBuildReturnLocation', () => {
-  expect(typeof main._triggerBuildReturnLocation).toEqual('function')
+test('function triggerBuildReturnLocation', () => {
+  expect(typeof main.triggerBuildReturnLocation).toEqual('function')
 })
 
 describe('testing APIs', () => {
@@ -45,7 +45,7 @@ describe('testing APIs', () => {
     fetch.mockResponseOnce(JSON.stringify({ data: '12345' }))
 
     // assert on the response
-    main._get(url, api, sleeptime, attempts, prop).then(res => {
+    main.get(url, api, sleeptime, attempts, prop).then(res => {
       expect(res).toEqual('12345')
     })
 
@@ -55,7 +55,7 @@ describe('testing APIs', () => {
   })
 
   it('postFormGrabLocation POSTS', () => {
-    const path = 'job/job_name/buildWithParameters'
+    const path = 'job/jobname/buildWithParameters'
     const token = '?token=icecream'
     const url = encodeURI(main.JenkinsBaseURL + path + token)
     const formData = new FormData()
@@ -64,7 +64,7 @@ describe('testing APIs', () => {
       JSON.stringify(data), 'name.yml')
 
     fetch.mockResponseOnce(url)
-    main._postFormGrabLocation(url, formData)
+    main.postFormGrabLocation(url, formData)
 
 
     expect(fetch.mock.calls.length).toEqual(1)
@@ -80,7 +80,7 @@ describe('testing APIs', () => {
     const url = main.JenkinsBaseURL
     fetch.mockReject(new Error('fake error message'))
     return (
-      main._get(url, api, sleeptime, attempts, prop)
+      main.get(url, api, sleeptime, attempts, prop)
         .then(res => {
           expect(res).toBeFalsy()
         })
@@ -88,7 +88,7 @@ describe('testing APIs', () => {
   })
 
   it('postFormGrabLocation handles error', () => {
-    const path = 'job/job_name/buildWithParameters'
+    const path = 'job/jobname/buildWithParameters'
     const token = '?'
     const url = encodeURI(main.JenkinsBaseURL + path + token)
     const formData = new FormData()
@@ -97,7 +97,7 @@ describe('testing APIs', () => {
       JSON.stringify(data), 'name.yml')
     fetch.mockReject(new Error('fake error message'))
     return (
-      main._postFormGrabLocation(url, formData)
+      main.postFormGrabLocation(url, formData)
         .then(res => {
           expect(res).toBeFalsy()
         })
